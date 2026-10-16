@@ -18,12 +18,6 @@ class FileComment(db.Model):
         index=True
     )
 
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id"),
-        nullable=True
-    )
-
     comment = db.Column(db.Text, nullable=False)
 
     created_at = db.Column(
@@ -37,7 +31,6 @@ class FileComment(db.Model):
         back_populates="comments"
     )
 
-    user = db.relationship("User")
 
     def to_dict(self):
         return {

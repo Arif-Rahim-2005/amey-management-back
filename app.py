@@ -9,6 +9,8 @@ from flask_restful import Api
 # from flask_sqlalchemy import SQLAlchemy
 from models import db
 from datetime import timedelta
+from resources.users import SignupResource, LogInResource, UserResource, AdminResource
+from resources.consignment_files import ConsignmentFileResource, ConsignmentFileListResource
 
 load_dotenv()
 
@@ -54,7 +56,13 @@ def home():
         "message": "Madrasatul Kheirat API is running"
     })
 
+api.add_resource(SignupResource, "/signup")
+api.add_resource(LogInResource, "/login")
+api.add_resource(UserResource, "/users", "/users/<int:user_id>")
+api.add_resource(AdminResource, "/admin/users")
 
+api.add_resource(ConsignmentFileListResource, "/files", "/files/list")
+api.add_resource(ConsignmentFileResource, "/files/<int:file_id>")
 
 if __name__ == "__main__":
     app.run(debug=True)

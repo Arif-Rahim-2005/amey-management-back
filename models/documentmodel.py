@@ -39,11 +39,5 @@ class Document(db.Model):
         onupdate=utc_now,
         nullable=False
     )
-    uploaded_by_id = db.Column(
-    db.Integer,
-    db.ForeignKey("users.id"),
-    nullable=True
-    )
 
     file = db.relationship("ConsignmentFile", back_populates="documents")
-    uploaded_by = db.relationship("User")   

@@ -35,10 +35,10 @@ class User(db.Model):
         default="user"
     )
 
-    consignment_files = db.relationship(
-    "ConsignmentFile",
-    foreign_keys="ConsignmentFile.created_by_id",
-    back_populates="created_by"
+    is_active = db.Column(
+    db.Boolean,
+    nullable=False,
+    default=True
     )
     
     def set_password(self, password):

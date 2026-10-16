@@ -47,6 +47,12 @@ class ConsignmentFile(db.Model):
         default=False,
     )
 
+    shipping_line = db.Column(
+        db.String(150),
+        nullable=True,
+        index=True,
+    )
+
     vessel_name = db.Column(db.String(150), nullable=True)
 
 # Shipping charges workflow
@@ -124,20 +130,10 @@ class ConsignmentFile(db.Model):
     )
 
     closed_at = db.Column(db.DateTime(timezone=True), nullable=True)
-    closed_by_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id"),
-        nullable=True,
-    )
 
     closure_reason = db.Column(db.Text, nullable=True)
 
-    # Ownership and audit timestamps
-    created_by_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id"),
-        nullable=True,
-    )
+    # Audit timestamps
 
     created_at = db.Column(
         db.DateTime(timezone=True),
@@ -173,17 +169,6 @@ class ConsignmentFile(db.Model):
         cascade="all, delete-orphan",
         lazy=True,
     )
-
-    created_by = db.relationship(
-        "User",
-        foreign_keys=[created_by_id],
-        back_populates="consignment_files"
-    )   
-
-    closed_by = db.relationship(
-        "User",
-        foreign_keys=[closed_by_id],
-    )
     
     def to_dict(self, include_containers=True):
         data = {
@@ -205,6 +190,7 @@ class ConsignmentFile(db.Model):
                 if self.current_eta else None
             ),
             "kwatos_status": self.kwatos_status,
+            "shipping_line": self.shipping_line,
             "vessel_name": self.vessel_name,
             "shipping_charges_requested": self.shipping_charges_requested,
             "shipping_charges_paid": self.shipping_charges_paid,
@@ -243,9 +229,7 @@ class ConsignmentFile(db.Model):
                 self.closed_at.isoformat()
                 if self.closed_at else None
             ),
-            "closed_by_id": self.closed_by_id,
             "closure_reason": self.closure_reason,
-            "created_by_id": self.created_by_id,
             "created_at": (
                 self.created_at.isoformat()
                 if self.created_at else None
