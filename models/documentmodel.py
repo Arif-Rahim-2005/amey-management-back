@@ -25,8 +25,7 @@ class Document(db.Model):
     public_id = db.Column(db.String(500), nullable=False)
 
     document_type = db.Column(db.String(50), nullable=True)
-    language = db.Column(db.String(10), nullable=True)
-
+    
     uploaded_at = db.Column(
         db.DateTime(timezone=True),
         default=utc_now,

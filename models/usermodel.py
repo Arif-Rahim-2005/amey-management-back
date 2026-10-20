@@ -38,7 +38,7 @@ class User(db.Model):
     is_active = db.Column(
     db.Boolean,
     nullable=False,
-    default=True
+    default=False
     )
     
     def set_password(self, password):

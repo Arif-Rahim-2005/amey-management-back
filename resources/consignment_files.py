@@ -139,6 +139,9 @@ class ConsignmentFileListResource(Resource):
         if not user or not user.is_active:
             return {"message": "Invalid or inactive user"}, 403
 
+        if user.role != "employee" and user.role != "admin":
+            return {"message": "Only authorized users can create consignment files"}, 403
+
         data = request.get_json(silent=True)
         if not isinstance(data, dict):
             return {"message": "Request body must be valid JSON"}, 400
@@ -195,6 +198,9 @@ class ConsignmentFileResource(Resource):
         if not user or not user.is_active:
             return {"message": "Invalid or inactive user"}, 403
 
+        if user.role != "employee" and user.role != "admin":
+            return {"message": "Only authorized users can update consignment files"}, 403
+
         file = db.session.get(ConsignmentFile, file_id)
         if not file:
             return {"message": "Consignment file not found"}, 404
@@ -231,8 +237,8 @@ class ConsignmentFileResource(Resource):
         if not user or not user.is_active:
             return {"message": "Invalid or inactive user"}, 403
 
-        if user.role != "admin":
-            return {"message": "Only admins can delete consignment files"}, 403
+        if user.role != "employee" and user.role != "admin":
+            return {"message": "Only authorized users can delete consignment files"}, 403
 
         file = db.session.get(ConsignmentFile, file_id)
         if not file:

@@ -36,7 +36,6 @@ class FileComment(db.Model):
         return {
             "id": self.id,
             "file_id": self.file_id,
-            "user_id": self.user_id,
             "comment": self.comment,
             "created_at": (
                 self.created_at.isoformat()

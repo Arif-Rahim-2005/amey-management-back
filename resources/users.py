@@ -42,6 +42,8 @@ class LogInResource(Resource):
                     "id": user.id,
                     "username": user.username,
                     "email": user.email,
+                    "role": user.role,
+                    "is_active": user.is_active,
                 },
             }, 200
         else:
@@ -188,7 +190,7 @@ class UserResource(Resource):
 
         # Validate role changes before making any changes.
         if data["role"] is not None:
-            if data["role"] not in ["user", "admin"]:
+            if data["role"] not in ["user", "admin", "employee"]:
                 return {"message": "Invalid role"}, 400
 
             # Prevent accidentally removing the last admin.

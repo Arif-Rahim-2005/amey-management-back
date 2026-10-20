@@ -39,6 +39,8 @@ class Container(db.Model):
 
     # Container tracking dates
     offloaded_at = db.Column(db.DateTime(timezone=True), nullable=True)
+    storage_location_type = db.Column(db.String(10), nullable=True)
+    storage_location_name = db.Column(db.String(150), nullable=True)
     exited_at = db.Column(db.DateTime(timezone=True), nullable=True)
     reached_depot_at = db.Column(db.DateTime(timezone=True), nullable=True)
 
@@ -68,6 +70,8 @@ class Container(db.Model):
             "container_type": self.container_type,
             "truck_number": self.truck_number,
             "offloaded_at": self.offloaded_at.isoformat() if self.offloaded_at else None,
+            "storage_location_type": self.storage_location_type,
+            "storage_location_name": self.storage_location_name,
             "exited_at": self.exited_at.isoformat() if self.exited_at else None,
             "reached_depot_at": self.reached_depot_at.isoformat() if self.reached_depot_at else None,
             "created_at": self.created_at.isoformat() if self.created_at else None,

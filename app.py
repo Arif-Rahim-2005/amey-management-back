@@ -11,6 +11,9 @@ from models import db
 from datetime import timedelta
 from resources.users import SignupResource, LogInResource, UserResource, AdminResource
 from resources.consignment_files import ConsignmentFileResource, ConsignmentFileListResource
+from resources.containers import ContainerListResource, ContainerResource
+from resources.documents import DocumentListResource, DocumentResource, DocumentReplaceResource
+from resources.comments import CommentListResource, CommentResource
 
 load_dotenv()
 
@@ -63,6 +66,16 @@ api.add_resource(AdminResource, "/admin/users")
 
 api.add_resource(ConsignmentFileListResource, "/files", "/files/list")
 api.add_resource(ConsignmentFileResource, "/files/<int:file_id>")
+
+api.add_resource(ContainerListResource, "/containers")
+api.add_resource(ContainerResource, "/containers/<int:container_id>")
+
+api.add_resource(DocumentListResource, "/documents")
+api.add_resource(DocumentResource, "/documents/<int:document_id>")
+api.add_resource(DocumentReplaceResource, "/documents/<int:document_id>/replace")
+
+api.add_resource(CommentListResource, "/comments")
+api.add_resource(CommentResource, "/comments/<int:comment_id>")
 
 if __name__ == "__main__":
     app.run(debug=True)
