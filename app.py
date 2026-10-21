@@ -56,7 +56,7 @@ CORS(app)
 @app.route("/")
 def home():
     return jsonify({
-        "message": "Madrasatul Kheirat API is running"
+        "message": "Amey Trading API is running"
     })
 
 api.add_resource(SignupResource, "/signup")
